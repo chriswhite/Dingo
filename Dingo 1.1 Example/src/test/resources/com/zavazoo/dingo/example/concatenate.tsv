@@ -1,0 +1,4 @@
+[]	{}
+["abcd"]	{"ab": "cd"}
+["runner", "swimming"]	{"run": "ner", "swim": "ming"}
+["Rio de Janeiro", "New York City", "Central London"]	{"Rio ": "de Janeiro", "New York ": "City", "Central ": "London"}
