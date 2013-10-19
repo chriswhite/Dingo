@@ -4,11 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import junit.framework.TestCase;
 
@@ -66,42 +63,19 @@ public class ComponentTest extends TestCase {
 	}
 
 	@Test
-	public void testConcatenate() {
+	public void testValues() {
 
-		Scenarios scenarios = Dingo.scenarios("com/zavazoo/dingo/example/concatenate");
+		Scenarios scenarios = Dingo.scenarios("com/zavazoo/dingo/example/values");
 
 		while (scenarios.more()) {
 
 			Scenario scenario = scenarios.next();
 
-			List<Object> result = scenario.result.list();
+			List<Object> expected = scenario.result.list();
 
-			Map<String, Object> criteria = scenario.criteria[0].map();
+			Map<String, Object> map = scenario.criteria[0].map();
 
-			// coming in Dingo version 1.2 - a better way to adapt lists and maps from JSON objects
-
-			List<String> expected = new LinkedList<String>();
-
-			for (Object object : result) {
-
-				String string = object.toString();
-
-				expected.add(string);
-
-			}
-
-			Map<String, String> strings = new HashMap<String, String>();
-
-			for (Entry<String, Object> entry : criteria.entrySet()) {
-
-				String key = entry.getKey();
-				String value = entry.getValue().toString();
-
-				strings.put(key, value);
-
-			}
-
-			List<String> actual = Component.concatenate(strings);
+			List<Object> actual = Component.values(map);
 
 			assertThat(actual, containsInAnyOrder(expected.toArray()));
 

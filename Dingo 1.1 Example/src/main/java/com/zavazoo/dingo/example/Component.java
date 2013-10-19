@@ -18,18 +18,15 @@ public class Component {
 
 	}
 
-	public static List<String> concatenate(Map<String, String> strings) {
+	public static List<Object> values(Map<String, Object> map) {
 
-		List<String> list = new LinkedList<String>();
+		List<Object> list = new LinkedList<Object>();
 
-		for (Map.Entry<String, String> entry : strings.entrySet()) {
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
 
-			String key = entry.getKey();
-			String value = entry.getValue();
+			Object value = entry.getValue();
 
-			String concatenated = key + value;
-
-			list.add(concatenated);
+			list.add(value);
 
 		}
 
