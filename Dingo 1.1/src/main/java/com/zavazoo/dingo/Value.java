@@ -95,7 +95,7 @@ public class Value {
 	/**
 	 * Yields this value as a character.
 	 * 
-	 * @return the string.
+	 * @return the character.
 	 */
 	public char character() {
 
@@ -112,7 +112,7 @@ public class Value {
 	/**
 	 * Yields this value as a boolean.
 	 * 
-	 * @return the string.
+	 * @return the boolean.
 	 */
 	public boolean truth() {
 
@@ -127,9 +127,9 @@ public class Value {
 	}
 
 	/**
-	 * Yields this value as a integer.
+	 * Yields this value as an integer.
 	 * 
-	 * @return the string.
+	 * @return the integer.
 	 */
 	public int integer() {
 
@@ -146,7 +146,7 @@ public class Value {
 	/**
 	 * Yields this value as a short integer.
 	 * 
-	 * @return the string.
+	 * @return the short integer.
 	 */
 	public short shortint() {
 
@@ -163,7 +163,7 @@ public class Value {
 	/**
 	 * Yields this value as a long integer.
 	 * 
-	 * @return the string.
+	 * @return the long integer.
 	 */
 	public long longint() {
 
@@ -178,9 +178,9 @@ public class Value {
 	}
 
 	/**
-	 * Yields this value as a short floating-point integer.
+	 * Yields this value as a short floating-point number.
 	 * 
-	 * @return the string.
+	 * @return the short floating-point number.
 	 */
 	public float floating() {
 
@@ -195,9 +195,9 @@ public class Value {
 	}
 
 	/**
-	 * Yields this value as a long floating-point integer.
+	 * Yields this value as a long floating-point number.
 	 * 
-	 * @return the string.
+	 * @return the long floating-point number.
 	 */
 	public double doubleint() {
 
@@ -229,7 +229,7 @@ public class Value {
 	}
 
 	/**
-	 * Yields this value as a list created using "raw" "untyped" JSON binding.
+	 * Yields this value as a list created using "raw/untyped" JSON binding.
 	 * 
 	 * @return the list.
 	 */
@@ -259,7 +259,7 @@ public class Value {
 	}
 
 	/**
-	 * Yields this value as a map created using "raw" "untyped" JSON binding.
+	 * Yields this value as a map created using "raw/untyped" JSON binding.
 	 * 
 	 * @return the map.
 	 */
