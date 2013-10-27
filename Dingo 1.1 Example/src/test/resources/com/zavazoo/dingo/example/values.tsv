@@ -1,4 +1,0 @@
-[]	{}
-["value"]	{"key": "value"}
-["apple", "tomato"]	{"fruit": "apple", "vegetable": "tomato"}
-["woof", "quack", "miaow"]	{"dog": "woof", "duck": "quack", "cat": "miaow"}
