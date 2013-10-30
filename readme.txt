@@ -487,4 +487,97 @@ public class TimeFunctionsTest extends TestCase {
 
 }
 
+Working with JSON
+
+Dingo fully supports the binding of JSON test data to lists and maps, and bespoke data structures, using the Jackson API. The example at the beginning of this tutorial described the default usage of JSON support in Dingo whereby a list of objects and a map of strings to objects were defined in a test data file and then obtained by the test method using calls to the Value.list() and Value.map() methods.
+
+In addition to that default usage, Dingo supports more complex test data structures such as generic lists and maps, for example a list of strings or a map of strings to integers, and also supports bespoke data structures such as JavaBeans otherwise known as Plain-Old Java Objects or POJOs.
+
+The reader will note that JSON only allows strings to be used for map keys, however map values or list entries may comprise strings, integers, floating-point numbers, booleans, or further data structures like subsidiary lists and maps.
+
+The following test data located at the relative filesystem path src/test/resources/com/zavazoo/dingo/example/create-user.bsv lists user profiles comprising the user's age and gender which are used to automatically select subscriptions to various magazines. The first column of each row defines the list of magazines, to which a given user should be subscribed, and the second column of each row defines the user profile:
+
+["Fast Cars", "Weightlifting"]  |  {"name": {"first": "Joe", "last": "Sixpack"}, "gender": "MALE", "age": 30, "verified": false}
+["Fashion", "Food", "Yoga"]     |  {"name": {"first": "Jane", "last": "Curvey"}, "gender": "FEMALE", "age": 25, "verified": true}
+
+The test data may be used to assert the validity of an operation named UserDao.createUserSubscriptions that creates the user profile in the application database, along with database entries for the automatically selected magazine subscriptions, and finally yields the list of magazine subscriptions:
+
+package com.zavazoo.dingo.example;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+
+import java.util.List;
+
+import junit.framework.TestCase;
+
+import org.junit.Test;
+
+import com.zavazoo.dingo.Dingo;
+import com.zavazoo.dingo.Scenario;
+import com.zavazoo.dingo.Scenarios;
+
+public class UserDaoTest extends TestCase {
+
+	@Test
+	public void testCreateUserSubscriptions() {
+
+		Scenarios scenarios = Dingo.scenarios("com/zavazoo/dingo/example/create-user");
+
+		while (scenarios.more()) {
+
+			Scenario scenario = scenarios.next();
+
+			List<String> expected = scenario.result.list(String.class);
+
+			User user = scenario.criteria[0].object(User.class);
+
+			List<String> actual = UserDao.createUserSubscriptions(user);
+
+			assertThat(actual, containsInAnyOrder(expected.toArray()));
+
+		}
+
+	}
+
+}
+
+The test method above references an hitherto undefined class named User that must comprise the requisite bean properties and modifier methods so that the JSON parser can bind each value expressed in the JSON string, defined as the second column of each row in the test data file, to the corresponding bean property of the User object:
+
+package com.zavazoo.dingo.example;
+ 
+public class User {
+
+	private Name name;
+	private Gender gender;
+	private int age;
+	private boolean verified;
+
+	public enum Gender { MALE, FEMALE };
+
+	public class Name {
+
+		private String first;
+		private String last;
+
+		public String getFirst() { return first; }
+		public String getLast() { return last; }
+
+		public void setFirst(String first) { this.first = first; }
+		public void setLast(String last) { this.last = last; }
+
+	}
+
+	public Name getName() { return name; }
+	public Gender getGender() { return gender; }
+	public int getAge() { return age; }
+	public boolean isVerified() { return verified; }
+
+	public void setName(Name name) { this.name = name; }
+	public void setGender(Gender gender) { this.gender = gender; }
+	public void setAge(int age) { this.age = age; }
+	public void setVerified(boolean verified) { this.verified = verified; }
+
+}
+
 © 2010-2013 Chris White. All rights reserved
